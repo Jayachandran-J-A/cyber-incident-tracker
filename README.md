@@ -14,18 +14,3 @@ This project is aimed at building a tool to provide real-time feeds of cyber inc
 - Enhance the threat assessment potential based on past and current incidents.
 - Empower organizations to take necessary actions to mitigate further risks.
 
-## Getting Started
-
-### Prerequisites
-
-- Python 3.x
-- Flask
-- Machine Learning Libraries (e.g., scikit-learn, pandas)
-- Database (e.g., MySQL, PostgreSQL, or SQLite)
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Jayachandran-J-A/cyber-incident-tracker.git
-   cd cyber-incident-tracker
