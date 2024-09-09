@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Incident Tracker</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        #type-chart, #time-chart {
+            width: 100%;
+            margin: 0 auto;
+            height: 400px;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto;
+            width: 300px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cyber Incidents in Indian Cyberspace</h1>
+    
+    <!-- Graphs -->
+    <h2>Incident Types Distribution</h2>
+    <div id="type-chart"></div>
+    
+    <h2>Incidents Over Time</h2>
+    <div id="time-chart"></div>
+
+    <!-- Word Cloud -->
+    <h2>Frequency of Common Keywords in Cyber Incidents</h2>
+    <div id="keyword-chart"></div>
+    
+    <!-- Incident Table -->
+    <h2>Incident Details</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Frequency</th>
+            <th>Timestamp</th>
+            <th>Source</th>
+            <th>Severity</th>
+            <th>Impact Description</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Phishing</td>
+            <td>5</td>
+            <td>2024-09-05</td>
+            <td>CERT-In</td>
+            <td>High</td>
+            <td>Significant financial damage</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Malware</td>
+            <td>3</td>
+            <td>2024-09-03</td>
+            <td>CISA</td>
+            <td>Medium</td>
+            <td>Moderate operational impact</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Ransomware</td>
+            <td>4</td>
+            <td>2024-09-04</td>
+            <td>NCSC</td>
+            <td>High</td>
+            <td>Critical system disruption</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Data Breach</td>
+            <td>2</td>
+            <td>2024-09-02</td>
+            <td>VirusTotal</td>
+            <td>Low</td>
+            <td>Leakage of confidential data</td>
+        </tr>
+    </table>
+
+    <!-- Graph Scripts -->
+    <script>
+        // Example data for incident types
+        var typeData = {
+            data: [{
+                type: 'pie',
+                values: [10, 5, 15, 8],
+                labels: ['Phishing', 'Malware', 'Ransomware', 'Data Breach']
+            }],
+            layout: {
+                title: 'Distribution of Incident Types'
+            }
+        };
+
+        // Example data for incidents over time
+        var timeData = {
+            data: [{
+                type: 'scatter',
+                mode: 'lines+markers',
+                x: ['2024-09-01', '2024-09-02', '2024-09-03', '2024-09-04', '2024-09-05'],
+                y: [2, 5, 3, 8, 5],
+                name: 'Incident Count'
+            }],
+            layout: {
+                title: 'Number of Incidents Over Time',
+                xaxis: { title: 'Date' },
+                yaxis: { title: 'Number of Incidents' }
+            }
+        };
+
+        // Plot the charts
+        Plotly.newPlot('type-chart', typeData.data, typeData.layout);
+        Plotly.newPlot('time-chart', timeData.data, timeData.layout);
+
+        var keywordData = [{
+            x: ['Phishing', 'Data Breach', 'Malware', 'Ransomware', 'Denial of Service (DoS)', 
+                'Advanced Persistent Threat (APT)', 'Zero-day Vulnerability', 'SQL Injection', 
+                'Cross-site Scripting (XSS)', 'Credential Stuffing', 'Brute Force Attack', 'Insider Threat'],
+            y: [45, 30, 28, 20, 15, 12, 10, 8, 7, 6, 5, 3],  // Replace these values with real data frequencies
+            type: 'bar'
+        }];
+
+        var keywordLayout = {
+            title: 'Frequency of Common Cyber Incident Keywords',
+            xaxis: {
+                title: 'Keyword',
+                tickangle: -45,  // Rotates the labels to 45 degrees
+                tickfont: {
+                    size: 12,  // Adjust the font size for readability
+                    color: 'black'
+                }
+            },
+            yaxis: {
+                title: 'Frequency'
+            },
+            margin: {
+                b: 150  // Increase bottom margin to make space for the rotated labels
+            }
+        };
+
+        Plotly.newPlot('keyword-chart', keywordData, keywordLayout);
+    </script>
+</body>
+</html>
