@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Incident Tracker</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f0f0f0; }
+        .container { max-width: 1200px; margin: 0 auto; background-color: white; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; text-align: center; }
+        .chart-container { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .chart { width: 48%; height: 400px; background-color: white; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+        .word-cloud { width: 100%; text-align: center; margin-bottom: 20px; }
+        .word-cloud img { max-width: 100%; height: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cyber Incidents in Indian Cyberspace</h1>
+        
+        <div class="chart-container">
+            <div id="severity-chart" class="chart"></div>
+            <div id="time-chart" class="chart"></div>
+        </div>
+        
+        <div class="word-cloud">
+            <h2>Common Terms in Incident Descriptions</h2>
+            <img src="data:image/png;base64,{{ word_cloud }}" alt="Word Cloud of Incident Descriptions">
+        </div>
+        
+        <h2>Incident Details</h2>
+        <table>
+            <tr>
+                <th>CVE ID</th>
+                <th>Description</th>
+                <th>Published Date</th>
+                <th>Last Modified</th>
+                <th>Severity</th>
+            </tr>
+            {% for incident in incidents %}
+            <tr>
+                <td>{{ incident.id }}</td>
+                <td>{{ incident.description }}</td>
+                <td>{{ incident.published_date }}</td>
+                <td>{{ incident.last_modified_date }}</td>
+                <td>{{ incident.severity }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <script>
+        var severityChart = {{ severity_chart | safe }};
+        var timeChart = {{ time_chart | safe }};
+        
+        Plotly.newPlot('severity-chart', severityChart.data, severityChart.layout);
+        Plotly.newPlot('time-chart', timeChart.data, timeChart.layout);
+    </script>
+</body>
+</html>
