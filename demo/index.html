@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +47,7 @@
 </head>
 <body>
     <h1>Cyber Incidents in Indian Cyberspace</h1>
-    
+
     <!-- Graphs -->
     <h2>Incident Types Distribution</h2>
     <div id="type-chart"></div>
@@ -57,7 +58,7 @@
     <!-- Word Cloud -->
     <h2>Frequency of Common Keywords in Cyber Incidents</h2>
     <div id="keyword-chart"></div>
-    
+
     <!-- Incident Table -->
     <h2>Incident Details</h2>
     <table>
@@ -107,6 +108,47 @@
             <td>Leakage of confidential data</td>
         </tr>
     </table>
+
+    <!-- Add Incident Section -->
+    <h2>Add New Incident</h2>
+    <form id="incident-form" onsubmit="return validateIncident()">
+        <label for="type">Incident Type:</label>
+        <select id="type" name="type" required>
+            <option value="">Select Incident Type</option>
+            <option value="Phishing">Phishing</option>
+            <option value="Malware">Malware</option>
+            <option value="Ransomware">Ransomware</option>
+            <option value="Data Breach">Data Breach</option>
+        </select>
+        <br><br>
+
+        <label for="frequency">Frequency:</label>
+        <input type="number" id="frequency" name="frequency" required>
+        <br><br>
+
+        <label for="timestamp">Timestamp:</label>
+        <input type="date" id="timestamp" name="timestamp" required>
+        <br><br>
+
+        <label for="source">Source:</label>
+        <input type="text" id="source" name="source" required>
+        <br><br>
+
+        <label for="severity">Severity:</label>
+        <select id="severity" name="severity" required>
+            <option value="">Select Severity</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+        <br><br>
+
+        <label for="description">Impact Description:</label>
+        <textarea id="description" name="description" rows="4" cols="50" required></textarea>
+        <br><br>
+
+        <input type="submit" value="Submit Incident">
+    </form>
 
     <!-- Graph Scripts -->
     <script>
@@ -169,6 +211,56 @@
         };
 
         Plotly.newPlot('keyword-chart', keywordData, keywordLayout);
+
+        // Incident Form Validation Logic
+        const keywordMapping = {
+            'Phishing': ['email', 'credential', 'fake', 'scam'],
+            'Malware': ['virus', 'malicious', 'trojan', 'worm'],
+            'Ransomware': ['ransom', 'encrypt', 'Bitcoin'],
+            'Data Breach': ['leakage', 'breach', 'unauthorized access']
+        };
+
+        const validSources = ['CERT-In', 'CISA', 'NCSC', 'VirusTotal'];
+
+        function validateSource(source) {
+            return validSources.includes(source);
+        }
+
+        function validateDescription(type, description) {
+            const keywords = keywordMapping[type] || [];
+            return keywords.some(keyword => description.toLowerCase().includes(keyword));
+        }
+
+        function validateSeverityImpact(severity, description) {
+            if (severity === 'Low' && description.toLowerCase().includes('significant')) {
+                return false;  // Example: Low severity should not mention significant impact
+            }
+            return true;
+        }
+
+        function validateIncident() {
+            const type = document.getElementById('type').value;
+            const description = document.getElementById('description').value;
+            const source = document.getElementById('source').value;
+            const severity = document.getElementById('severity').value;
+
+            if (!validateSource(source)) {
+                alert('Invalid source');
+                return false;
+            }
+
+            if (!validateDescription(type, description)) {
+                alert('Incident description does not match the selected type');
+                return false;
+            }
+
+            if (!validateSeverityImpact(severity, description)) {
+                alert('Severity and impact description do not align.');
+                return false;
+            }
+
+            return true;  // Proceed if all validations pass
+        }
     </script>
 </body>
 </html>
