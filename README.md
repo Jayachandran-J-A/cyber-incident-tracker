@@ -14,3 +14,4 @@ This project is aimed at building a tool to provide real-time feeds of cyber inc
 - Enhance the threat assessment potential based on past and current incidents.
 - Empower organizations to take necessary actions to mitigate further risks.
 
+
